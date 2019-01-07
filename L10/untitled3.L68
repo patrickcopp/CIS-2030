@@ -1,0 +1,65 @@
+00008000 Starting Address
+Assembler used: EASy68K Editor/Assembler v3.1 April 19, 2005
+Created On: 21/11/2018 6:51:00 PM
+
+00000000                             1  
+00000000  =0000C001                  2  DUART    EQU      $C001         ;68681 base addres
+00000000  =00000002                  3  SRA      EQU      2           ;status register A
+00000000  =00000006                  4  TBA      EQU      6           ;Tx buffer A
+00000000  =0000000D                  5  CR       EQU      $0D         ;ASCII carriage return
+00000000  =0000000A                  6  LF       EQU      $0A         ;ASCII line feed
+00000000                             7  
+00000000                             8  
+00000000                             9  
+00008000                            10          ORG      $8000
+00008000  3E3C 000A                 11  MESSAGE MOVE.W   #10,D7      ;use D7 as counter
+00008004  227C 00008014             12  LOOP    MOVEA.L  #TEXT,A1    ;A1 ---> message
+0000800A  6100 004C                 13          BSR      OUTSTR      ;send it
+0000800E  5347                      14          SUBQ    #1,D7        ;decrement loop index
+00008010  66F2                      15          BNE     LOOP         ;repeat until done
+00008012  4E4E                      16          TRAP    #14
+00008014                            17  
+00008014  0D 0A 41 73 73 65 ...     18  TEXT    DC.B     CR,LF,'Assembly language programming'
+00008033  20 69 73 20 66 75 ...     19          DC.B     ' is fun',0
+0000803B                            20  
+0000803B                            21  
+0000803C  2F08                      22  OUTCHR  MOVE.L   A0,-(A7)                ;save A0
+0000803E  3F07                      23          MOVE.W  D7,-(A7)                         ;save D7
+00008040  207C 0000C001             24          MOVEA.L #DUART,A0                        ;A0 points to 68681
+00008046  1E28 0002                 25  OUTCHR2 MOVE.B   SRA(A0),D7     ;get port A status
+0000804A  0207 0004                 26          ANDI.B   #4,D7          ;buffer empty?
+0000804E  67F6                      27          BEQ     OUTCHR2        ;no:  check again
+00008050  1140 0006                 28          MOVE.B  D0,TBA(A0)     ;yes: send char.
+00008054  3E1F                      29          MOVE.W  (A7)+,D7       ;restore D7
+00008056  205F                      30          MOVE.L  (A7)+,A0       ;restore A0RTS
+00008058  2F00                      31  OUTSTR  MOVE.L  D0,-(A7)       ;save D0 on stack
+0000805A  1019                      32  OUTSTR2 MOVE.B  (A1)+,D0       ;get character
+0000805C  6700 0006                 33          BEQ     EXIT           ;if null byte, done
+00008060  61DA                      34          BSR     OUTCHR         ;send
+00008062  60F6                      35          BRA     OUTSTR2        ;repeat
+00008064  201F                      36  EXIT    MOVE.L   (A7)+,D0       ;restore D0
+00008066  4E75                      37          RTS
+00008068                            38  
+00008068                            39  
+00008068                            40          END     MESSAGE
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+CR                  D
+DUART               C001
+EXIT                8064
+LF                  A
+LOOP                8004
+MESSAGE             8000
+OUTCHR              803C
+OUTCHR2             8046
+OUTSTR              8058
+OUTSTR2             805A
+SRA                 2
+TBA                 6
+TEXT                8014

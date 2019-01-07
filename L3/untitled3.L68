@@ -1,0 +1,33 @@
+00008000 Starting Address
+Assembler used: EASy68K Editor/Assembler v3.1 April 19, 2005
+Created On: 03/10/2018 7:55:32 PM
+
+00000000                             1  * L3_3.x68 example of program with assemble-time expression
+00008000                             2          ORG     $8000
+00008000                             3  
+00008000  3039 00009000              4  START   MOVE.W  W,D0
+00008006  3239 00009002              5          MOVE.W  W+2,D1
+0000800C  1439 00009004              6          MOVE.B  W+4,D2
+00008012  C5C0                       7          MULS    D0,D2
+00008014  83FC 0003                  8          DIVS    #3,D1
+00008018  D441                       9          ADD     D1,D2
+0000801A                            10  
+0000801A  4E4E                      11          TRAP    #14
+0000801C                            12  
+00009000                            13          ORG     $9000
+00009000  0001                      14  W       DC.W    1
+00009002  0003                      15  X       DC.W    3
+00009004  01                        16  Y       DC.B    1
+00009005                            17          END     START
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+START               8000
+W                   9000
+X                   9002
+Y                   9004

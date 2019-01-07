@@ -1,0 +1,34 @@
+
+Source file: L7_2.X68
+Assembled on: 18-10-31 at: 19:10:48
+          by: X68K PC-2.2 Copyright (c) University of Teesside 1989,96
+Defaults: ORG $0/FORMAT/OPT A,BRL,CEX,CL,FRL,MC,MD,NOMEX,NOPCO
+
+    1                        *-----------------------------------------------------------
+    2                        * Program Number:
+    3                        * Written by    :
+    4                        * Date Created  :
+    5                        * Description   :
+    6                        *
+    7                        *-----------------------------------------------------------
+    8  00009000                        ORG       $9000
+    9                        
+   10  00009000 00000000     RESULT:   DC.L      0
+   11                        
+   12  00009500                        ORG       $9500
+   13  00009500 027CDFFF     START:    ANDI.W    #%1101111111111111,SR
+   14  00009504 4FF900008100           LEA       $8100,A7
+   15  0000950A 4EB900009512           JSR       GENMUL
+   16  00009510 4E4F                   TRAP      #15                   ;Halt Simulator
+   17                        
+   18                        
+   19  00009512 2F00         GENMUL:   MOVE.L    D0,-(A7)
+   20  00009514 2001                   MOVE.L    D1,D0
+   21  00009516 C1C2                   MULS      D2,D0
+   22  00009518 23C000009000           MOVE.L    D0,RESULT
+   23  0000951E 201F                   MOVE.L    (A7)+,D0
+   24  00009520 4E75                   RTS       
+   25                        
+   26           00009500               END       START
+
+Lines: 26, Errors: 0, Warnings: 0.

@@ -1,0 +1,66 @@
+00008000 Starting Address
+Assembler used: EASy68K Editor/Assembler v3.1 April 19, 2005
+Created On: 17/10/2018 8:24:17 PM
+
+00000000                             1  *L4_6.x68     
+00000000                             2  
+00008000                             3              ORG         $8000
+00008000  2039 00009000              4  START       MOVE.L      A,D0
+00008006  2239 00009004              5              MOVE.L      B,D1
+0000800C  2439 00009008              6              MOVE.L      C,D2
+00008012                             7  
+00008012  B280                       8              CMP.L       D0,D1
+00008014  6C00 000C                  9              BGE         ELSEIF
+00008018  B481                      10              CMP.L       D1,D2
+0000801A  6C00 0006                 11              BGE         ELSEIF
+0000801E  6000 0012                 12              BRA         BIG1        
+00008022                            13              
+00008022  B081                      14  ELSEIF      CMP.L       D1,D0
+00008024  6C00 0018                 15              BGE         BIG3
+00008028  B481                      16              CMP.L       D1,D2
+0000802A  6C00 0012                 17              BGE         BIG3
+0000802E  6000 0008                 18              BRA         BIG2
+00008032                            19  
+00008032                            20  
+00008032                            21  
+00008032  2C00                      22  BIG1        MOVE.L      D0,D6
+00008034  6000 000E                 23              BRA         EXIT
+00008038                            24  
+00008038  2C01                      25  BIG2        MOVE.L      D1,D6
+0000803A  6000 0008                 26              BRA         EXIT
+0000803E                            27  
+0000803E                            28  
+0000803E  2C02                      29  BIG3        MOVE.L      D2,D6
+00008040  6000 0002                 30              BRA         EXIT
+00008044                            31  
+00008044                            32              
+00008044                            33  
+00008044                            34  
+00008044                            35  
+00008044  4E4E                      36  EXIT        TRAP        #14
+00008046                            37  
+00008046                            38  
+00008046                            39  
+00009000                            40              ORG         $9000                   
+00009000  FFFFFFCE                  41  A           DC.L        -50
+00009004  FFFFFFC8                  42  B           DC.L        -56
+00009008  FFFFFF6A                  43  C           DC.L        -150
+0000900C                            44              
+0000900C                            45              END         START
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+A                   9000
+B                   9004
+BIG1                8032
+BIG2                8038
+BIG3                803E
+C                   9008
+ELSEIF              8022
+EXIT                8044
+START               8000

@@ -1,0 +1,55 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v3.1 April 19, 2005
+Created On: 31/10/2018 7:30:09 PM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Program Number:
+00000000                             3  * Written by    :
+00000000                             4  * Date Created  :
+00000000                             5  * Description   :
+00000000                             6  *
+00000000                             7  *-----------------------------------------------------------
+00001000                             8  START   ORG     $1000
+00001000  2039 0000103C              9          MOVE.L  A,D0
+00001006  2239 00001040             10          MOVE.L  B,D1
+0000100C                            11  
+0000100C  0C81 00000001             12  LOOP    CMPI.L  #1,D1
+00001012  6700 0024                 13          BEQ     EXIT
+00001016  6000 000E                 14          BRA     ODD
+0000101A                            15  
+0000101A                            16  
+0000101A  DA80                      17  ADD     ADD.L   D0,D5
+0000101C  E388                      18          LSL.L   #1,D0
+0000101E  0281 7FFFFFFF             19          ANDI.L  #%01111111111111111111111111111111,D1
+00001024  60E6                      20          BRA     LOOP
+00001026                            21  
+00001026  E299                      22  ODD     ROR.L   #1,D1
+00001028  0801 001F                 23          BTST    #31,D1
+0000102C  66EC                      24          BNE     ADD
+0000102E  0281 7FFFFFFF             25          ANDI.L  #%01111111111111111111111111111111,D1
+00001034  E388                      26          LSL.L   #1,D0
+00001036  60D4                      27          BRA     LOOP
+00001038                            28  
+00001038  DA80                      29  EXIT    ADD.L   D0,D5
+0000103A  4E4F                      30          TRAP    #15             Halt Simulator
+0000103C                            31  
+0000103C                            32  
+0000103C  00000400                  33  A       DC.L    $400
+00001040  0000000A                  34  B       DC.L    $A
+00001044                            35  
+00001044                            36          END     START
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+A                   103C
+ADD                 101A
+B                   1040
+EXIT                1038
+LOOP                100C
+ODD                 1026
+START               1000

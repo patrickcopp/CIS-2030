@@ -1,0 +1,27 @@
+00009000 Starting Address
+Assembler used: EASy68K Editor/Assembler v3.1 April 19, 2005
+Created On: 14/11/2018 7:42:14 PM
+
+00000000                             1  
+00000000                             2  
+00000000                             3  
+00008500                             4          ORG     $8500
+00008500  68 65 6C 6C 6F 00          5  hi      DC.B    'hello',0
+00008506                             6  
+00009000                             7          ORG     $9000
+00009000  227C 00008500              8  START   MOVEA.L #hi,A1
+00009006  4E45                       9          TRAP    #5
+00009008  103C 000A                 10          MOVE.B  #$0A,D0
+0000900C  4E41                      11          TRAP    #1
+0000900E  4E45                      12          TRAP    #5
+00009010                            13          END     START
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+HI                  8500
+START               9000

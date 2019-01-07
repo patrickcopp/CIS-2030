@@ -1,0 +1,67 @@
+00008500 Starting Address
+Assembler used: EASy68K Editor/Assembler v3.1 April 19, 2005
+Created On: 21/11/2018 6:19:45 PM
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Program Number:
+00000000                             3  * Written by    :
+00000000                             4  * Date Created  :
+00000000                             5  * Description   :
+00000000                             6  *
+00000000                             7  *-----------------------------------------------------------
+00000000                             8  
+00000000                             9  
+00008000                            10          ORG     $8000
+00008000  0C11 0000                 11  PRINT   CMPI.B  #0,(A1)
+00008004  6700 0008                 12          BEQ     EXIT
+00008008  1019                      13          MOVE.B  (A1)+,D0
+0000800A  6000 0FF4                 14          BRA     OUTCHR
+0000800E  4E75                      15  EXIT    RTS
+00008010                            16  
+00008500                            17          ORG     $8500
+00008500  2079 00010000             18  START   MOVEA.L string,A0
+00008506  4EB9 00008000             19          JSR     PRINT
+0000850C  4E4E                      20          TRAP    #14
+0000850E                            21  
+0000850E                            22  
+00009000                            23          ORG     $9000
+00009000  2F08                      24  OUTCHR  MOVE.L  A0,-(A7)
+00009002  3F07                      25          MOVE.W  D7,-(A7)
+00009004  207C 0000C001             26          MOVEA.L #DUART,A0
+0000900A                            27  
+0000900A  1E28 0002                 28  OUTCHR2 MOVE.B  SRA(A0),D7
+0000900E  0207 0004                 29          ANDI.B  #4,D7
+00009012  67F6                      30          BEQ.S   OUTCHR2
+00009014  1140 0006                 31          MOVE.B  D0,TBA(A0)
+00009018  3E1F                      32          MOVE.W  (A7)+,D7
+0000901A  205F                      33          MOVE.L  (A7)+,A0
+0000901C  4E75                      34          RTS
+0000901E                            35  
+0000901E                            36  
+00010000                            37          ORG     $10000
+00010000  73 74 72 69 6E 67 00      38  string  DC.B    'string',0
+00010007  =0000C001                 39  DUART   EQU     $C001
+00010007  =00000006                 40  TBA     EQU     3*2
+00010007  =00000002                 41  SRA     EQU     1*2
+00010007                            42  
+00010007                            43  
+00010007                            44  
+00010007                            45  
+00010007                            46          END     START
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+DUART               C001
+EXIT                800E
+OUTCHR              9000
+OUTCHR2             900A
+PRINT               8000
+SRA                 2
+START               8500
+STRING              10000
+TBA                 6

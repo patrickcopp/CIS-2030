@@ -1,0 +1,45 @@
+00008000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 2018-12-03 5:41:02 PM
+
+00000000                             1  
+00008000                             2          ORG    $8000
+00008000  4FF8 7000                  3  START   LEA     $7000,SP
+00008004  3F3C 0064                  4          MOVE #100,-(SP) ;X = 1, Y = 2, Z = 3, W expected to equal 10
+00008008  3F3C 0064                  5          MOVE #100,-(SP)
+0000800C  3F3C 0064                  6          MOVE #100,-(SP)
+00008010  243C 000FFFFF              7          MOVE.L  #$FFFFF,D2              
+00008016                             8  
+00008016  4EB9 00008022              9          JSR  SQUAD
+0000801C  4FEF 0006                 10          LEA 6(SP),SP
+00008020  4E4E                      11          TRAP #14        
+00008022                            12   
+00008022  48E7 3FFC                 13  SQUAD   MOVEM.L D2-D7/A0-A5,-(SP)
+00008026  322F 000C                 14          MOVE 12(SP),D1
+0000802A  342F 000A                 15          MOVE 10(SP),D2
+0000802E                            16         
+0000802E  C5C1                      17          MULS D1,D2
+00008030  C3C1                      18          MULS D1,D1
+00008032  C3FC 0005                 19          MULS #5,D1
+00008036  C5FC 0002                 20          MULS #2,D2
+0000803A                            21          
+0000803A  9242                      22          SUB D2,D1
+0000803C                            23          
+0000803C  342F 0008                 24          MOVE 8(SP),D2
+00008040  C5C2                      25          MULS D2,D2
+00008042  D242                      26          ADD D2,D1
+00008044                            27          
+00008044  4CDF 3FFC                 28          MOVEM.L (SP)+,D2-D7/A0-A5
+00008048  4E75                      29          RTS
+0000804A                            30  
+0000804A                            31          END    START
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+SQUAD               8022
+START               8000

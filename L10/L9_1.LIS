@@ -1,0 +1,51 @@
+
+Source file: L9_1.X68
+Assembled on: 18-11-21 at: 19:05:35
+          by: X68K PC-2.2 Copyright (c) University of Teesside 1989,96
+Defaults: ORG $0/FORMAT/OPT A,BRL,CEX,CL,FRL,MC,MD,NOMEX,NOPCO
+
+    1                        
+    2           0000C001     DUART:    EQU       $C001                 ;;68681 base addres
+    3           00000002     SRA:      EQU       2                     ;;status register A
+    4           00000006     RBA:      EQU       6                     ;;Tx buffer A
+    5           0000000D     CR:       EQU       $0D                   ;;ASCII carriage return
+    6           0000000A     LF:       EQU       $0A                   ;;ASCII line feed
+    7                        
+    8                        
+    9                        
+   10  00008000                        ORG       $8000
+   11  00008000 3E3C000A     MESSAGE:  MOVE.W    #10,D7                ;;use D7 as counter
+   12  00008004 227C00008012           MOVEA.L   #TEXT,A1              ;;A1 ---> message
+   13  0000800A 4EB900008058           JSR       OUTSTR                ;;send it
+   14  00008010 4E4E                   TRAP      #14
+   15                        
+   16  00008012 0D0A41737365 TEXT:     DC.B      CR,LF,'Assembly language programming'
+                6D626C79206C
+                616E67756167
+                652070726F67
+                72616D6D696E
+                67          
+   17  00008031 206973206675           DC.B      ' is fun',0
+                6E00        
+   18                        
+   19                        
+   20  0000803A 2F08         OUTCHR:   MOVE.L    A0,-(A7)              ;;save A0
+   21  0000803C 3F07                   MOVE.W    D7,-(A7)              ;;save D7
+   22  0000803E 207C0000C001           MOVEA.L   #DUART,A0             ;;A0 points to 68681
+   23  00008044 1E280002     OUTCHR2:  MOVE.B    SRA(A0),D7            ;;get port A status
+   24  00008048 02070004               ANDI.B    #4,D7                 ;;buffer empty?
+   25  0000804C 67F6                   BEQ       OUTCHR2               ;;no:  check again
+   26  0000804E 11400006               MOVE.B    D0,RBA(A0)            ;;yes: send char.
+   27  00008052 3E1F                   MOVE.W    (A7)+,D7              ;;restore D7
+   28  00008054 205F                   MOVE.L    (A7)+,A0              ;;restore A0
+   29  00008056 4E75                   RTS       
+   30  00008058 2F00         OUTSTR:   MOVE.L    D0,-(A7)              ;;save D0 on stack
+   31  0000805A 1019         OUTSTR2:  MOVE.B    (A1)+,D0              ;;get character
+   32  0000805C 67000006               BEQ       EXIT                  ;;if null byte, done
+   33  00008060 61D8                   BSR       OUTCHR                ;;send
+   34  00008062 60F6                   BRA       OUTSTR2               ;;repeat
+   35  00008064 201F         EXIT:     MOVE.L    (A7)+,D0              ;;restore D0
+   36  00008066 4E75                   RTS       
+   37           00008000               END       MESSAGE
+
+Lines: 37, Errors: 0, Warnings: 0.

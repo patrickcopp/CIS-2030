@@ -1,0 +1,48 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v3.1 April 19, 2005
+Created On: 31/10/2018 7:43:41 PM
+
+00001000                             1  START   ORG     $1000
+00001000                             2  
+00001000  2039 00001030              3          MOVE.L  A,D0
+00001006  2239 00001034              4          MOVE.L  B,D1
+0000100C                             5  
+0000100C  0C81 00000001              6  LOOP    CMPI.L  #1,D1
+00001012  6700 0018                  7          BEQ     EXIT
+00001016  6000 0008                  8          BRA     ODD
+0000101A                             9  
+0000101A                            10  
+0000101A  DA80                      11  ADD     ADD.L   D0,D5
+0000101C  E388                      12          LSL.L   #1,D0
+0000101E                            13          
+0000101E  60EC                      14          BRA     LOOP
+00001020                            15  
+00001020                            16  
+00001020  E289                      17  ODD     LSR.L   #1,D1
+00001022  0801 001F                 18          BTST    #31,D1
+00001026  66F2                      19          BNE     ADD
+00001028                            20          
+00001028  E388                      21          LSL.L   #1,D0
+0000102A  60E0                      22          BRA     LOOP
+0000102C                            23  
+0000102C  DA80                      24  EXIT    ADD.L   D0,D5
+0000102E  4E4E                      25          TRAP    #14
+00001030                            26  
+00001030  0000FFFF                  27  A       DC.L    $FFFF
+00001034  0000FFFF                  28  B       DC.L    $FFFF
+00001038                            29          END     START
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+A                   1030
+ADD                 101A
+B                   1034
+EXIT                102C
+LOOP                100C
+ODD                 1020
+START               1000

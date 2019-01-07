@@ -1,0 +1,28 @@
+00008000 Starting Address
+Assembler used: EASy68K Editor/Assembler v3.1 April 19, 2005
+Created On: 17/10/2018 7:02:29 PM
+
+00000000                             1  *Lab5_2.x68: Signed and Unsigned Branches
+00000000                             2               
+00008000                             3                ORG            $8000
+00008000  103C 00F0                  4  START       MOVE.B      #%11110000,D0
+00008004  123C 0001                  5              MOVE.B      #%00000001,D1
+00008008  B200                       6              CMP.B       D0,D1
+0000800A  6200 0002                  7              BHI         LABEL1
+0000800E                             8              
+0000800E  6200 0008                  9  LABEL1      BHI         LABEL2
+00008012  103C 0065                 10              MOVE.B      #$65,D0                       
+00008016  4E71                      11              NOP
+00008018  4E4E                      12  LABEL2      TRAP     #14
+0000801A                            13              END      START
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+LABEL1              800E
+LABEL2              8018
+START               8000

@@ -1,0 +1,23 @@
+00004030 Starting Address
+Assembler used: EASy68K Editor/Assembler v3.1 April 19, 2005
+Created On: 17/10/2018 6:24:55 PM
+
+00000000                             1  *Lab5_1.x68: Relative addressing
+00000000                             2  
+00004030                             3              ORG         $4030
+00004030  6700 000E                  4  START       BEQ         HERE
+00004034  303C 0005                  5              MOVE        #5,D0
+00004040                             6              ORG         $4040
+00004040  66EE                       7  HERE        BNE         START
+00004042  4E4E                       8              TRAP        #14
+00004044                             9              END         START
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+HERE                4040
+START               4030

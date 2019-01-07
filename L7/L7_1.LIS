@@ -1,0 +1,30 @@
+
+Source file: L7_1.X68
+Assembled on: 18-10-31 at: 20:07:53
+          by: X68K PC-2.2 Copyright (c) University of Teesside 1989,96
+Defaults: ORG $0/FORMAT/OPT A,BRL,CEX,CL,FRL,MC,MD,NOMEX,NOPCO
+
+    1  00008000                        ORG       $8000
+    2  00008000 203900009000 START:    MOVE.L    A,D0
+    3  00008006 223900009004           MOVE.L    B,D1
+    4  0000800C 0C8100000001 LOOP:     CMPI.L    #1,D1
+    5  00008012 67000024               BEQ       EXIT
+    6  00008016 6000000E               BRA       ODD
+    7  0000801A DA80         ADD:      ADD.L     D0,D5
+    8  0000801C E388                   LSL.L     #1,D0
+    9  0000801E 02817FFFFFFF           ANDI.L    #%01111111111111111111111111111111,D1
+   10  00008024 60E6                   BRA       LOOP
+   11  00008026 E299         ODD:      ROR.L     #1,D1
+   12  00008028 0801001F               BTST      #31,D1
+   13  0000802C 66EC                   BNE       ADD
+   14  0000802E 02817FFFFFFF           ANDI.L    #%01111111111111111111111111111111,D1
+   15  00008034 E388                   LSL.L     #1,D0
+   16  00008036 60D4                   BRA       LOOP
+   17  00008038 DA80         EXIT:     ADD.L     D0,D5
+   18  0000803A 4E4E                   TRAP      #14
+   19  00009000                        ORG       $9000
+   20  00009000 00000400     A:        DC.L      $400
+   21  00009004 0000000A     B:        DC.L      $A
+   22           00008000               END       START
+
+Lines: 22, Errors: 0, Warnings: 0.
